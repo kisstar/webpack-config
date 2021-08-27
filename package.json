@@ -1,7 +1,17 @@
 {
   "name": "webpack-config",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
+  "main": "main.js",
+  "scripts": {
+    "start": "webpack serve --config config/webpack.config.dev.js",
+    "build": "webpack --config config/webpack.config.prod.js"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.3.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0",
+    "webpack-merge": "^5.8.0"
+  },
   "license": "MIT"
 }
