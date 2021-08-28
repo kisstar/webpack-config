@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { resolve } = require('../lib/utils');
+const getHtmlPluginConfig = require('../lib/html-plugin-config');
 const getCssLoaderConfig = require('../lib/css-loader-config');
 const baseConfig = require('./webpack.config.base');
 
@@ -20,11 +21,7 @@ const devConfig = {
     compress: true,
     open: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: resolve('./public/template.html'),
-    }),
-  ],
+  plugins: [new HtmlWebpackPlugin(getHtmlPluginConfig(isDevelopment))],
 };
 
 module.exports = merge(baseConfig, devConfig);
