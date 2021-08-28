@@ -2,36 +2,42 @@ const { resolve } = require('../lib/utils');
 
 module.exports = {
   mode: 'none',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
     path: resolve('dist'),
     filename: 'js/[name]_[contenthash:8].js',
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.(t|j)s$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            exclude: [
-              // \\ for Windows, \/ for Mac OS and Linux
-              /node_modules[\\\/]core-js/,
-              /node_modules[\\\/]webpack[\\\/]buildin/,
-            ],
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  useBuiltIns: 'usage',
-                  corejs: 3,
-                },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              exclude: [
+                // \\ for Windows, \/ for Mac OS and Linux
+                /node_modules[\\\/]core-js/,
+                /node_modules[\\\/]webpack[\\\/]buildin/,
               ],
-            ],
-            cacheDirectory: true,
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'usage',
+                    corejs: 3,
+                  },
+                ],
+              ],
+              cacheDirectory: true,
+            },
           },
-        },
+          'ts-loader',
+        ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
