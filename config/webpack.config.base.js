@@ -10,6 +10,30 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            exclude: [
+              // \\ for Windows, \/ for Mac OS and Linux
+              /node_modules[\\\/]core-js/,
+              /node_modules[\\\/]webpack[\\\/]buildin/,
+            ],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                },
+              ],
+            ],
+            cacheDirectory: true,
+          },
+        },
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset',
         generator: {
@@ -17,7 +41,7 @@ module.exports = {
         },
         parser: {
           dataUrlCondition: {
-            maxSize: 8 * 1024, // 4kb
+            maxSize: 8 * 1024,
           },
         },
       },
