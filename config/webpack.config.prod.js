@@ -11,6 +11,7 @@ const isDevelopment = false;
 
 const prodConfig = {
   mode: 'production',
+  devtool: 'nosources-source-map',
   output: {
     clean: true,
   },

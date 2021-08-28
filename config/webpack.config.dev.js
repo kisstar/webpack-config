@@ -10,6 +10,7 @@ const isDevelopment = true;
 
 const devConfig = {
   mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
   module: {
     rules: [getCssLoaderConfig(isDevelopment)],
   },
