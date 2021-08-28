@@ -11,6 +11,9 @@ const isDevelopment = false;
 
 const prodConfig = {
   mode: 'production',
+  output: {
+    clean: true,
+  },
   module: {
     rules: [getCssLoaderConfig(isDevelopment)],
   },
@@ -20,7 +23,7 @@ const prodConfig = {
   plugins: [
     new HtmlWebpackPlugin(getHtmlPluginConfig(isDevelopment)),
     new MiniCssExtractPlugin({
-      filename: 'css/main.css',
+      filename: 'css/[name]_[contenthash:8].css',
     }),
   ],
 };
