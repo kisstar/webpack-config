@@ -6,6 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const getHtmlPluginConfig = require('../lib/html-plugin-config');
 const getCssLoaderConfig = require('../lib/css-loader-config');
+const getAssetLoaderConfig = require('../lib/asset-loader.cofig');
 const baseConfig = require('./webpack.config.base');
 
 const isDevelopment = false;
@@ -15,9 +16,13 @@ const prodConfig = {
   devtool: 'nosources-source-map',
   output: {
     clean: true,
+    filename: 'js/[name]_[contenthash:8].js',
   },
   module: {
-    rules: [getCssLoaderConfig(isDevelopment)],
+    rules: [
+      getCssLoaderConfig(isDevelopment),
+      ...getAssetLoaderConfig(isDevelopment),
+    ],
   },
   optimization: {
     minimize: true,

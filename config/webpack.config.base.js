@@ -1,3 +1,5 @@
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 const { resolve } = require('../lib/utils');
 
 module.exports = {
@@ -5,10 +7,11 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: resolve('dist'),
-    filename: 'js/[name]_[contenthash:8].js',
+    filename: 'js/main.js',
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    modules: [resolve('node_modules')],
   },
   module: {
     rules: [
@@ -36,28 +39,16 @@ module.exports = {
               cacheDirectory: true,
             },
           },
-          'ts-loader',
-        ],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset',
-        generator: {
-          filename: 'images/[name]_[hash:8][ext]',
-        },
-        parser: {
-          dataUrlCondition: {
-            maxSize: 8 * 1024,
+          {
+            loader: 'ts-loader',
+            options: {
+              // disable type checker - we will use it in fork plugin
+              transpileOnly: true,
+            },
           },
-        },
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'fonts/[name]_[hash:8][ext]',
-        },
+        ],
       },
     ],
   },
+  plugins: [new ForkTsCheckerWebpackPlugin()],
 };
