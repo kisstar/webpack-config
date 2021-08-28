@@ -5,6 +5,6 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: resolve('dist'),
-    filename: 'main.js',
+    filename: 'js/main.js',
   },
 };
