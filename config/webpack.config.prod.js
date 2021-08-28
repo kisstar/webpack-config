@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const getHtmlPluginConfig = require('../lib/html-plugin-config');
 const getCssLoaderConfig = require('../lib/css-loader-config');
@@ -19,7 +20,15 @@ const prodConfig = {
     rules: [getCssLoaderConfig(isDevelopment)],
   },
   optimization: {
-    minimizer: [new CssMinimizerPlugin()],
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserPlugin(), // 压缩 JavaScript，会移除无用代码
+    ],
+    splitChunks: {
+      chunks: 'all', // 提取公共模块
+      usedExports: true, // 标记无用代码
+    },
   },
   plugins: [
     new HtmlWebpackPlugin(getHtmlPluginConfig(isDevelopment)),
